@@ -15,13 +15,16 @@ const (
 
 	L_BRACE
 	R_BRACE
-	L_CURLY
-	R_CURLY
+	L_PAREN
+	R_PAREN
 	DOT
+	SEMI
+	DOLLAR
+	COMMENT
 
 	QUOTE
-
 	IDENT
+	NUMBER
 )
 
 type token struct {
@@ -53,6 +56,10 @@ func (ps *PGNScanner) Next() token {
 		return ps.scanIdent()
 	} else if '"' == char {
 		return ps.scanDoubleQuoted()
+	} else if isNumber(char) {
+		return ps.scanNumber()
+	} else if '{' == char {
+		return ps.scanComment()
 	}
 
 	ps.s.Next()
@@ -73,6 +80,24 @@ func (ps *PGNScanner) Next() token {
 	case ']':
 		return token{
 			tok:      R_BRACE,
+			position: ps.s.Pos(),
+			length:   1,
+		}
+	case '(':
+		return token{
+			tok:      L_PAREN,
+			position: ps.s.Pos(),
+			length:   1,
+		}
+	case ')':
+		return token{
+			tok:      R_PAREN,
+			position: ps.s.Pos(),
+			length:   1,
+		}
+	case '.':
+		return token{
+			tok:      DOT,
 			position: ps.s.Pos(),
 			length:   1,
 		}

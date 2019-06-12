@@ -90,6 +90,120 @@ var testers = []scannerTest{
 			},
 		},
 	},
+	scannerTest{
+		name:   `Happy Moves`,
+		phrase: `1. e4 c5 2. Nf6`,
+		tokens: []token{
+			token{
+				tok:     NUMBER,
+				literal: "1",
+			},
+			token{
+				tok: DOT,
+			},
+			token{
+				tok: WS,
+			},
+			token{
+				tok:     IDENT,
+				literal: `e4`,
+			},
+			token{
+				tok: WS,
+			},
+			token{
+				tok:     IDENT,
+				literal: `c5`,
+			},
+			token{
+				tok: WS,
+			},
+			token{
+				tok:     NUMBER,
+				literal: "2",
+			},
+			token{
+				tok: DOT,
+			},
+			token{
+				tok: WS,
+			},
+			token{
+				tok:     IDENT,
+				literal: "Nf6",
+			},
+		},
+	},
+	scannerTest{
+		name:   `Comments`,
+		phrase: `1. e4 {Incredible}`,
+		tokens: []token{
+			token{
+				tok:     NUMBER,
+				literal: "1",
+			},
+			token{
+				tok: DOT,
+			},
+			token{
+				tok: WS,
+			},
+			token{
+				tok:     IDENT,
+				literal: `e4`,
+			},
+			token{
+				tok: WS,
+			},
+			token{
+				tok:     COMMENT,
+				literal: `Incredible`,
+			},
+		},
+	},
+	scannerTest{
+		name:   `Alternatives`,
+		phrase: `1. e4 (1. d4)`,
+		tokens: []token{
+			token{
+				tok:     NUMBER,
+				literal: "1",
+			},
+			token{
+				tok: DOT,
+			},
+			token{
+				tok: WS,
+			},
+			token{
+				tok:     IDENT,
+				literal: `e4`,
+			},
+			token{
+				tok: WS,
+			},
+			token{
+				tok: L_PAREN,
+			},
+			token{
+				tok:     NUMBER,
+				literal: "1",
+			},
+			token{
+				tok: DOT,
+			},
+			token{
+				tok: WS,
+			},
+			token{
+				tok:     IDENT,
+				literal: "d4",
+			},
+			token{
+				tok: R_PAREN,
+			},
+		},
+	},
 }
 
 // TODO: test phrases with \\ and \" characters
